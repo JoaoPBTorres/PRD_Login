@@ -103,5 +103,27 @@ class User{
             echo "Usuário criado com sucesso!";
         }
     }
+
+    private function emailVerify($email): bool {
+    if (!isset($usuarios, $email)) {
+        return false;   
+    }
+    return true;
+    }
     
+    public function login(string $email, string $senha): bool {
+        $emailOk->emailVerify($email);
+        if (!$emailOk) {
+            return $emailOk;
+        }
+    
+        $senhaOk->password_verify($senha);
+        if (!$senhaOk) {
+            return false;
+        }
+    
+        return true;
+    
+    }
+
 }
