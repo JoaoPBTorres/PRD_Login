@@ -1,129 +1,93 @@
 <?php
 
-class User{
+class User 
+{
+    private array $users = [];
 
-    private int $id;
-    private string $email;
-    private string $password;
-    private string $name;
-    private array $createdUsers = [];
-    
-
-    // public function __construct(int $id, string $email, string $password, string $name) {
-        
-    //     $this->id = $id;
-    //     $this->email = $email;
-    //     $this->password = $password;
-    //     $this->name = $name;
-    // } 
-
-    public function setId(int $id): void{
-        if($id < 0){
-            echo "O Id não pode ser menor do que 0!";
-        } else {
-            $this->id = $id;
+    public function createUser(string $name, string $email, string $password): bool {
+        $nameOk = $this->validateName($name);
+        if ($nameOk != true) {
+            return $nameOk;
         }
-    }
 
-    public function getId(): int {
-        return $this->id;
-    }
-
-    public function setName(string $name): void {
-        if(empty($name)){
-            echo "O nome não pode ser vazio.";
-        } else {
-            $this->name = $name;
-        }
-    }
-
-    public function getName(): string {
-        return $this->name;
-    }
-
-    public function setEmail(string $email): bool{
-        if(empty($email)){
-            echo "Email não pode ser vazio!";
-            return false;
-        } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-            echo "O email não é válido!";
-            return false;
-        } else {
-            echo"Email válido <br> ";
-            $this->email = $email;
-            return true;
-        }
-    }
-
-    public function getEmail(): string {
-        return $this->email;
-    }
-
-    public function getPassword(): string {
-        return $this->password;
-    }
-
-    public function validatePassword($password): bool {
-        echo "Senha {$password}";
-        if(empty($password)){
-            echo "Senha não pode ser vazia!";
-            return false;
-        } 
-        
-        if(strlen($password) < 8){
-            echo "A senha deve ter pelo menos 8 caracteres!";
-            return false;
-        } 
-        
-        if(!preg_match("#[A-Z]+#", $password)){
-            echo "A senha deve ter pelo menos uma letra maiúscula!";
-            return false;
-        }
-        
-        if(!preg_match("#[0-9]+#", $password)){
-            echo "A senha deve ter pelo menos um número!";
-            return false;
-        }
-        
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
-        echo "Senha criptografada: {$this->password}";
-        return true;
-        
-    }
-
-    function createUser(int $id, string $email, string $password, string $name){
-        if(!setEmail($email) or !validatePassword($password)){
-            echo "Erro ao cadastrar usuário";
-        }elseif(isset($email, $createdUsers)){
-            echo "Usuário já está cadastrado!";
-        } else {
-            setId($id);
-            setName($name);
-            array_push($createdUsers, $user);
-            echo "Usuário criado com sucesso!";
-        }
-    }
-
-    private function emailVerify($email): bool {
-    if (!isset($usuarios, $email)) {
-        return false;   
-    }
-    return true;
-    }
-    
-    public function login(string $email, string $senha): bool {
-        $emailOk->emailVerify($email);
-        if (!$emailOk) {
+        $emailOk = $this->validateEmail($email);
+        if ($emailOk != true) {
             return $emailOk;
         }
-    
-        $senhaOk->password_verify($senha);
-        if (!$senhaOk) {
-            return false;
+
+        $passwordOk = $this->validatePassword($password);
+        if ($passwordOk != true) {
+            return $passwordOk;
         }
-    
+
+        $this->users[] = ['name' => $name, 'email' => $email, 'password' => $password];
         return true;
-    
     }
 
+    public function login(): bool {
+        
+    }
+
+    private function validateName($name): string | bool {
+        if (empty($name)) {
+            return "Nome é obrigatório";
+        }
+        if (strlen($name) < 2) {
+            return "Nome deve ter pelo menos 2 caracteres";
+        }
+        if (strlen($name) > 100) {
+            return "Nome deve ter no máximo 100 caracteres";
+        }
+        if (!preg_match('/^[a-zA-ZÀ-ÿ\s]+$/', $name)) {
+            return "Nome deve conter apenas letras e espaços";
+        }
+
+        return true;
+    }
+
+    private function validateEmail($email): string | bool {
+        if (empty($email)) {
+            return "Email é obrigatório";
+        }
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return "Email inválido";
+        }
+        if (strlen($email) > 255) {
+            return "Email muito longo";
+        }
+
+        $emailExists = false;
+        foreach ($this->users as $user) {
+            if ($user['email'] === $email) {
+                $emailExists = true;
+                break;
+            }
+        }
+
+        if ($emailExists) {
+            return "Email já está em uso";
+        }
+
+        return true;
+    }
+
+    private function validatePassword($password): string | bool {
+        if (empty($password)) {
+            return "Senha é obrigatória";
+        }
+
+        if (strlen($password) < 8) {
+            return "Senha deve ter pelo menos 8 caracteres";
+        }
+
+        if (!preg_match('/[A-Z]/', $password)) {
+            return "Senha deve ter pelo menos uma letra maiúscula";
+        }
+
+        if (!preg_match('/[0-9]/', $password)) {
+            return "Senha deve ter pelo menos um número";
+        }
+
+        return true;
+    }
 }
