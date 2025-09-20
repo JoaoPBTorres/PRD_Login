@@ -20,12 +20,22 @@ class User
             return $passwordOk;
         }
 
-        $this->users[] = ['name' => $name, 'email' => $email, 'password' => $password];
+        $this->users[] = ['name' => $name, 'email' => $email, 'password' => password_hash($password, PASSWORD_DEFAULT)];
         return true;
     }
 
-    public function login(): bool {
-        
+    public function login(string $email, string $senha): bool {
+        foreach ($this->users as $user) {
+            if ($user['email'] == $email) {
+                if (password_verify($senha, $user['password'])) {
+                    return true;
+                } else {
+                    return "Senha incorreta";
+                }
+            }
+        }
+        return "Email inválido";
+
     }
 
     private function validateName($name): string | bool {
