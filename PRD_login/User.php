@@ -38,6 +38,16 @@ class User
 
     }
 
+    public function resetPassword(string $email, string $newPassword) {
+        $newPasswordOk = $this->validatePassword($newPassword);
+        if ($newPasswordOk != true) {
+            return $newPasswordOk;
+        }
+        $this->users[$email]['password'] = $newPassword;
+
+        return true;
+    }
+
     private function validateName($name): string | bool {
         if (empty($name)) {
             return "Nome é obrigatório";
@@ -100,4 +110,17 @@ class User
 
         return true;
     }
+
+    // public function getUserCount(): int {
+    //     return count($this->users);
+    // }
+
+    // public function getUserIdByEmail(string $email): ?int {
+    //     foreach ($this->users as $user) {
+    //         if ($user['email'] === $email) {
+    //             return $user['id'];
+    //         }
+    //     }
+    //     return null;
+    // }
 }
