@@ -3,7 +3,6 @@
 $createdUsers = [];
 
 require_once "Class/User.php";
-require_once "Class/Menu.php";
 require_once "Class/Menus/MenuCreateUser.php";
 require_once "Class/Menus/MenuLogin.php";
 require_once "Class/Menus/MenuResetPassword.php";
@@ -65,5 +64,6 @@ function showMenus($menuOptions, $createdUsers): void {
     }
 
 }
+
 
 showMenus($menuOptions, $createdUsers);
