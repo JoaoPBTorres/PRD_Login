@@ -58,11 +58,12 @@ function showMenus($menuOptions, $createdUsers): void {
     if(array_key_exists($option, $menuOptions)){
         $menu = $menuOptions[$option];
         $menu->showMenu($createdUsers);
-        if($option < 99){
+        if($option != 99){
             showMenus($menuOptions, $createdUsers);
         }
     }
 
 }
+
 
 showMenus($menuOptions, $createdUsers);
