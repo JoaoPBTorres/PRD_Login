@@ -1,9 +1,8 @@
 <?php
 
-require_once "Class/Menu.php";
 require_once "Class/User.php";
 
-class MenuCreateUser extends Menu{
+class MenuCreateUser{
     
     
     public function showMenu(array &$createdUsers){

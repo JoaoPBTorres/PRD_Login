@@ -1,9 +1,8 @@
 <?php
 
-require_once "Class/Menu.php";
 require_once "Class/User.php";
 
-class MenuResetPassword extends Menu{
+class MenuResetPassword {
 
     public function showMenu(array &$createdUsers){
         echo "Digite o seu email:";
@@ -11,7 +10,7 @@ class MenuResetPassword extends Menu{
         
         foreach($createdUsers as $user){
             if($user->getEmail() === $email){
-                echo "Digite a nova senha";
+                echo "Digite a nova senha:";
                 $newPassword = readLine();
                 $user->resetPassword($user->getId(), $newPassword, $createdUsers);
                 return;
