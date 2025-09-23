@@ -35,14 +35,10 @@ function showMenus($menuOptions, $createdUsers, $userManager, $validator): void 
         if($option !== 99){
             showMenus($menuOptions, $createdUsers, $userManager, $validator);
         }
+    
     }
     
-    if($option == 99){
-        return;
-    }
     
-    echo "Opção inválida!\n";
-        showMenus($menuOptions, $createdUsers, $userManager, $validator);
 
 }
 
