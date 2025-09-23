@@ -18,7 +18,7 @@ class User{
     public function setName(string $name): void {
         if(empty($name)){
             echo "O nome não pode ser vazio. \n";
-        } else {
+        }else {
             $this->name = $name;
         }
     }
@@ -31,10 +31,10 @@ class User{
         if(empty($email)){
             echo "Email não pode ser vazio! \n";
             return false;
-        } elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        }elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)){
             echo "O email {$email} não é válido! \n";
             return false;
-        } else {
+        }else {
             $this->email = $email;
             return true;
         }

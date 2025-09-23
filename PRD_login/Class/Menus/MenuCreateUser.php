@@ -18,8 +18,10 @@ class MenuCreateUser{
         $id = count($createdUsers);
         $user->setId($id);
 
-        $user->createUser($email, $password, $name, $createdUsers);
-        $createdUsers[] = $user;
+        if($user->createUser($email, $password, $name, $createdUsers)){
+            $createdUsers[] = $user;
+        }
+       
         
     }
     
