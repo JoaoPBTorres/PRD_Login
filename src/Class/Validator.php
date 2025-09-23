@@ -41,12 +41,4 @@ class Validator{
         return true;
     }
 
-    public function getUserByEmail(&$createdUsers){
-        foreach($createdUsers as $user){
-            if($user->getEmail()=== $email){
-                return $user;
-            }
-        }
-    }
-
 }

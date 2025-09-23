@@ -31,12 +31,12 @@ function showMenus($menuOptions, &$createdUsers, $userManager, $validator): void
 
         $option = (int) readline("Opção: ");
 
-        if ($option === 99) {
+        if($option === 99) {
             echo "Saindo...\n";
             break; // encerra o loop
         }
 
-        if (array_key_exists((string)$option, $menuOptions)) {
+        if(array_key_exists((string)$option, $menuOptions)) {
             $menu = $menuOptions[(string)$option];
             $menu->showMenu($createdUsers, $userManager, $validator);
         } else {
