@@ -101,18 +101,3 @@ O programa abrirá o menu interativo no terminal, com as opções de:
    Resultado: mensagem → “E-mail já está em uso”.
 
 ---
-
-## Estrutura de Pastas
-
-```
-/PRD_Login
-│── Class/
-│   ├── User.php
-│   ├── Menu.php
-│   └── Menus/
-│       └── MenuCreateUser.php
-│       └── MenuLogin.php
-│       └── MenuResetPassword.php
-│       └── MenuShowUsers.php
-│── index.php
-│── README.md
